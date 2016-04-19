@@ -7,3 +7,4 @@ communist
  * add remote: `git add remote origin git@github.com:murlocbrand/communist.git`
  * pull changes: `git pull`
 
+![Background](https://gfycat.com/SlimMellowLacewing)
