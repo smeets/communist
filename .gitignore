@@ -1,3 +1,6 @@
 bin/
+.settings/
 *.class
+.classpath
+.project
 
