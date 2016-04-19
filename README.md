@@ -1,4 +1,4 @@
-[!GIF](https://giant.gfycat.com/SlimMellowLacewing.gif)
+![GIF](https://giant.gfycat.com/SlimMellowLacewing.gif)
 
 communist
 =========
