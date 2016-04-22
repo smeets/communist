@@ -6,13 +6,11 @@ import java.util.Vector;
 
 public class ChatTCP {
 	private ServerSocket ss;
-	private MailBox mail;
-	private Vector<Socket> clients;
+	
+	private Vector<Room> rooms;
 
 	public ChatTCP(int port) {
-		mail = new MailBox();
-		clients = new Vector<Socket>();
-		
+		rooms = new Vector<Room>();
 		try {
 			ss = new ServerSocket(port);
 		} catch (IOException e) {
@@ -21,17 +19,43 @@ public class ChatTCP {
 	}
 	
 	public void run() {
-		new MessageThread(mail, clients).start();
 		while (!ss.isClosed()) {
 			try {
-				Socket s = ss.accept();
-				System.out.println("Client connected: " + s.getInetAddress());
-				new ChatTCPHandler(s, mail, clients).start();	
-			} catch (IOException e) {}
+				new ChatTCPHandler(ss.accept(), this).start();	
+			} catch (IOException e) {
+			}
 		}
 	}
-
+	
+	public Room createRoom(String name) {
+		Room room = new Room(name, this);
+		rooms.add(room);
+		return room;
+	}
+	
+	public Room getRoom(String name) {
+		Room room = null;
+		
+		synchronized (rooms) {
+			for (Room r : rooms) {
+				if (r.getName().equals(name)) {
+					room = r;
+					break;
+				}
+			}
+		}
+		
+		return room;
+	}
+	
+	public void removeRoom(Room room) {
+		synchronized (rooms) {
+			rooms.remove(room);
+		}
+	}
+	
 	public static void main(String[] args) {
 		new ChatTCP(30000).run();
 	}
+
 }

@@ -2,13 +2,15 @@ package protocol;
 
 import client.ChatClient;
 
-public class JoinResponsePacket implements Response {
+// Server --> JoinPacket --> Client
+
+public class JoinResponse implements Response {
 	private boolean success;
-	private String error;
+	private String message;
 	
-	public JoinResponsePacket(boolean success, String error) {
+	public JoinResponse(boolean success, String message) {
 		this.success = success;
-		this.error = error;
+		this.message = message;
 	}
 	
 	@Override

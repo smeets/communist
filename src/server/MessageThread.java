@@ -1,25 +1,33 @@
 package server;
+
+import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.net.Socket;
-import java.util.Vector;
+import java.io.ObjectOutputStream;
+
+import protocol.MessageResponse;
 
 public class MessageThread extends Thread {
-	private MailBox mail;
-	private Vector<Socket> clients;
+	private Room room;
+
+	public MessageThread(Room room) {
+		this.room = room;
+	}
 	
-	public MessageThread(MailBox mail, Vector<Socket> clients) {
-		this.clients = clients;
-		this.mail = mail;
+	public void send(ChatTCPHandler c, MessageResponse p) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(c.getSocket().getOutputStream()));
+			out.writeObject(p);
+		} catch (IOException e) {
+		}		
 	}
 
 	public void run() {
-		while (true) {
-			 String msg = mail.read();
-			 for (Socket s : clients)
-				try {
-					s.getOutputStream().write(msg.getBytes());
-				} catch (IOException e) {}
+		while (!room.isEmpty()) {
+			MailBox.Message msg = room.getMailBox().read();
+			MessageResponse p = new MessageResponse(msg.nick, msg.message);
 
+			for (ChatTCPHandler c : room.getClients())
+				send(c, p);
 		}
 	}
 }
