@@ -30,17 +30,17 @@ public class ChatClient {
 		kb.close();
 	}
 
-	public static void main(String[] args) {
-		// synopsis: java ChatClient machine port
-		if (args.length != 2) {
-			System.out.println("usage: java ChatClient machine port");
-			System.exit(1);
-		}
-		
-		String machine = args[0];
-		int port = Integer.parseInt(args[1]);
-		
-		new ChatClient(machine, port).run();
-	}
+//	public static void main(String[] args) {
+//		// synopsis: java ChatClient machine port
+//		if (args.length != 2) {
+//			System.out.println("usage: java ChatClient machine port");
+//			System.exit(1);
+//		}
+//		
+//		String machine = args[0];
+//		int port = Integer.parseInt(args[1]);
+//		
+//		new ChatClient(machine, port).run();
+//	}
 
 }
