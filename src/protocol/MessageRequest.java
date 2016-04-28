@@ -6,7 +6,7 @@ import server.Room;
 
 // Client --> JoinPacket --> server
 
-public class MessageRequest implements Request{
+public class MessageRequest extends Request{
 
 	private String msg;
 	

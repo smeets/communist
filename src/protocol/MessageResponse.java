@@ -2,7 +2,7 @@ package protocol;
 
 import client.ChatClient;
 
-public class MessageResponse implements Response {
+public class MessageResponse extends Response {
 	private String from;
 	private String message;
 	

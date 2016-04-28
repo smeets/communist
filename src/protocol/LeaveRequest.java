@@ -4,7 +4,7 @@ import server.ChatTCP;
 import server.ChatTCPHandler;
 import server.Room;
 
-public class LeaveRequest implements Request {
+public class LeaveRequest extends Request {
 
 	@Override
 	public Response execute(ChatTCP server, ChatTCPHandler client) {

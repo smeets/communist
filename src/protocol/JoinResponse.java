@@ -4,7 +4,7 @@ import client.ChatClient;
 
 // Server --> JoinPacket --> Client
 
-public class JoinResponse implements Response {
+public class JoinResponse extends Response {
 	private boolean success;
 	private String message;
 	
@@ -17,6 +17,10 @@ public class JoinResponse implements Response {
 	public void execute(ChatClient client) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public String toString(){
+		return message + " " + success;
 	}
 	
 }
