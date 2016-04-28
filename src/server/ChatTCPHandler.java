@@ -1,6 +1,4 @@
 package server;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,25 +22,26 @@ public class ChatTCPHandler extends Thread {
 
 	public void run() {
 		try {
-			ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
-			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(s.getOutputStream()));
-
+			ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+			out.flush();
+			ObjectInputStream in = new ObjectInputStream(s.getInputStream());
 			while (!s.isClosed()) {
 				Request req = (Request) in.readObject();
 				Response res = req.execute(server, this);
-				
 				// Some requests don´t generate responses, like Message
 				if (res != null)
 					out.writeObject(res);
 			}
 		} catch (IOException e) {
 			// client disconnected
+			System.out.println(e);
 		} catch (ClassNotFoundException e) {
-			// unknown request
+			System.out.println(e);
 		}
 		
 		if (room != null)
 			room.leave(this);
+		System.out.println("Client exited");
 	}
 
 	public String getNickName() {

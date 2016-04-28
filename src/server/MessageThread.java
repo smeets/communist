@@ -1,6 +1,5 @@
 package server;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
@@ -12,20 +11,21 @@ public class MessageThread extends Thread {
 	public MessageThread(Room room) {
 		this.room = room;
 	}
-	
+
 	public void send(ChatTCPHandler c, MessageResponse p) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(c.getSocket().getOutputStream()));
+			ObjectOutputStream out = new ObjectOutputStream(c.getSocket().getOutputStream());
 			out.writeObject(p);
+			out.flush();
 		} catch (IOException e) {
-		}		
+			System.out.println(e);
+		}
 	}
 
 	public void run() {
 		while (!room.isEmpty()) {
 			MailBox.Message msg = room.getMailBox().read();
 			MessageResponse p = new MessageResponse(msg.nick, msg.message);
-
 			for (ChatTCPHandler c : room.getClients())
 				send(c, p);
 		}
