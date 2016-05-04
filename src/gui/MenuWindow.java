@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+
 /**
  * A MenuWindow implements a programmerspecifiable menu window. The window
  * contains of a number of buttons, one for each menu alternative specified
@@ -21,7 +22,7 @@ public class MenuWindow {
     private Frame theMenu;
     private GridLayout theLayout;
     private int menuCnt;
-    private Vector buttons;
+    private Vector<Button> buttons;
     private boolean destroyed;
     private ActionHandler handler;
     private SelectionHandler selector;
@@ -41,16 +42,20 @@ public class MenuWindow {
      * @param title  a String containing the title to be displayed in
      *               the title bar of the window
      */
-    public MenuWindow(int x,int y,String title) {
+    public MenuWindow(String title) {
 	theMenu = new Frame(title);
-	theMenu.setLocation(x,y);
+	theMenu.setBounds(0, 0, 200, 470);
+	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	theMenu.setLocation((int) (dim.getWidth() / 2) - 475 - theMenu.getWidth(),
+			(int) (dim.getHeight() / 2) - 250);
 	theLayout = new GridLayout(1,1);
 	theMenu.setLayout(theLayout);
 	menuCnt = 0;
-	buttons = new Vector();
+	buttons = new Vector<Button>();
 	destroyed = false;
 	handler = new ActionHandler();
 	selector = null;
+	this.addDefaults();
     }
     
     /**
@@ -67,6 +72,11 @@ public class MenuWindow {
 	}
     }
     
+    public void addDefaults() {
+		add("[Create]");
+		add("[Delete]");
+	}
+    
     /**
      * Adds a new menu item to the bottom of the menu.
      *
@@ -82,6 +92,7 @@ public class MenuWindow {
 	    theMenu.add(b);
 	    b.addActionListener(handler);
 	    theMenu.pack();
+	    theMenu.setSize(200, 470);
 	}
     }
     

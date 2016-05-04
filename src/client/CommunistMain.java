@@ -75,7 +75,10 @@ public class CommunistMain {
 	     			s[1] = Port.getText();
 	     			s[2] = userText.getText();
 //	     			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+	     			frame.setVisible(false);
+	     			frame.dispose(); 
 	     			GUI gui = new GUI(s);
+	     			
 	      }
 	    });
 	 

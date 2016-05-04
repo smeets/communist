@@ -43,9 +43,11 @@ public class ListWindow {
      * @param title  a String containing the title to be displayed in
      *               the title bar of the window
      */
-    public ListWindow(int x,int y,String title) {
+    public ListWindow(String title) {
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	theWindow = new Frame(title);
-	theWindow.setLocation(x,y);
+	theWindow.setBounds(0, 0, 200, 472);
+	theWindow.setLocation((int)(dim.getWidth()/2)+472,(int)(dim.getHeight()/2)-250);
 	theList = new List(10,false);
 	handler = new ListHandler();
 	theList.addItemListener(handler);

@@ -4,8 +4,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Scanner;
+import protocol.JoinRequest;
+import protocol.Request;
 
-public class ChatClient {
+public class ChatClient extends Thread {
 	
 	private Socket s;
 	
@@ -21,26 +28,21 @@ public class ChatClient {
 		new MessagePrinter(s).start();
 		Scanner kb = new Scanner(System.in);
 		try {
-			OutputStream out = s.getOutputStream();
+			ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+			out.flush();
 			while (!s.isClosed()) {
-				String msg = kb.nextLine() + '\n';
-				out.write(msg.getBytes());
+				String msg = kb.nextLine();
+				if(msg.startsWith("/join")){
+					System.out.println(msg);
+					Request r = new JoinRequest("tempname", "temp");
+					System.out.println("Made request");
+					out.writeObject(r);
+					System.out.println("Wrote request");
+					out.flush();
+					System.out.println("Sent /join request");
+				}
 			}
 		} catch (IOException e) {}
 		kb.close();
 	}
-
-//	public static void main(String[] args) {
-//		// synopsis: java ChatClient machine port
-//		if (args.length != 2) {
-//			System.out.println("usage: java ChatClient machine port");
-//			System.exit(1);
-//		}
-//		
-//		String machine = args[0];
-//		int port = Integer.parseInt(args[1]);
-//		
-//		new ChatClient(machine, port).run();
-//	}
-
 }

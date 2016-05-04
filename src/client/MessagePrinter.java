@@ -1,26 +1,37 @@
 package client;
 
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.Scanner;
+import protocol.Response;
 
 public class MessagePrinter extends Thread {
 	private Socket s;
-	
+
 	public MessagePrinter(Socket s) {
 		this.s = s;
 	}
-	
+
 	public void run() {
 		try {
-			Scanner scan = new Scanner(s.getInputStream());
+			ObjectInputStream in = new ObjectInputStream(s.getInputStream());
+			System.out.println("Client is accepting");
 			while (!s.isClosed()) {
-				System.out.println(scan.nextLine());
+				Response r;
+				try {
+					r = (Response) in.readObject();
+					System.out.println(r.toString());
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			scan.close();
+			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
