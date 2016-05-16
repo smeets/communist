@@ -10,20 +10,25 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 import protocol.JoinRequest;
+import protocol.LeaveRequest;
+import protocol.MembersRequest;
+import protocol.MessageRequest;
 import protocol.Request;
+import protocol.RoomsRequest;
+import testing.MessagePrinter;
 
 public class ChatClient extends Thread {
-	
+	public String name;
 	private Socket s;
 	
-	public ChatClient(String host, int port) {
+	public ChatClient(String host, int port, String name) {
 		try {
 			s = new Socket(host, port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void run() {
 		new MessagePrinter(s).start();
 		Scanner kb = new Scanner(System.in);
@@ -32,17 +37,25 @@ public class ChatClient extends Thread {
 			out.flush();
 			while (!s.isClosed()) {
 				String msg = kb.nextLine();
-				if(msg.startsWith("/join")){
-					System.out.println(msg);
-					Request r = new JoinRequest("tempname", "temp");
-					System.out.println("Made request");
+				Request r = null;
+				if (msg.startsWith("/join")) {
+					r = new JoinRequest(name, "tempRoom");
+				} else if (msg.startsWith("/rooms")) {
+					r = new RoomsRequest();
+				} else if (msg.startsWith("/members")) {
+					r = new MembersRequest("tempRoom");
+				} else if (msg.startsWith("/leave")) {
+					r = new LeaveRequest();
+				} else {
+					r = new MessageRequest(msg);
+				}
+				if (r != null) {
 					out.writeObject(r);
-					System.out.println("Wrote request");
 					out.flush();
-					System.out.println("Sent /join request");
 				}
 			}
-		} catch (IOException e) {}
+		} catch (IOException e) {
+		}
 		kb.close();
 	}
 }

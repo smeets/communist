@@ -73,8 +73,8 @@ public class MenuWindow {
     }
     
     public void addDefaults() {
-		add("[Create]");
-		add("[Delete]");
+//		add("[Create]");
+//		add("[Delete]");
 	}
     
     /**

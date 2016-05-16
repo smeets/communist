@@ -1,11 +1,14 @@
 package server;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import protocol.Request;
 import protocol.Response;
+
 
 public class ChatTCPHandler extends Thread {
 	private Socket s;
