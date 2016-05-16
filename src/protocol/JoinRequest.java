@@ -8,6 +8,10 @@ import server.Room;
 
 public class JoinRequest extends Request{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4278775019324931328L;
 	private String nick, room;
 	
 	public JoinRequest(String nickname, String room) {
