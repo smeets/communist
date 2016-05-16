@@ -8,6 +8,10 @@ import server.Room;
 
 public class MessageRequest extends Request{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6689760223734488107L;
 	private String msg;
 	
 	public MessageRequest(String message) {

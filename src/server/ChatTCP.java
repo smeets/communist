@@ -13,6 +13,7 @@ public class ChatTCP extends Thread {
 		rooms = new Vector<Room>();
 		try {
 			ss = new ServerSocket(port);
+			System.out.println("Chat server listening on port " + port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -39,9 +40,14 @@ public class ChatTCP extends Thread {
 		rooms.add(room);
 		return room;
 	}
+	
+	public synchronized Vector<Room> getRooms() {
+		return rooms;
+	}
 
-	public synchronized void removeRoom(Room room) {
-		rooms.remove(room);
+	public synchronized void removeRoomIfEmpty(Room room) {
+		if (room.isEmpty())
+			rooms.remove(room);
 	}
 
 	public static void main(String[] args) {

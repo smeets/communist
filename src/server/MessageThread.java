@@ -14,9 +14,7 @@ public class MessageThread extends Thread {
 
 	public void send(ChatTCPHandler c, MessageResponse p) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(c.getSocket().getOutputStream());
-			out.writeObject(p);
-			out.flush();
+			c.respond(p);
 		} catch (IOException e) {
 			System.out.println(e);
 		}

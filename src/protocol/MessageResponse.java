@@ -3,6 +3,10 @@ package protocol;
 import client.ChatClient;
 
 public class MessageResponse extends Response {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5965567498383859252L;
 	private String from;
 	private String message;
 	
@@ -14,6 +18,11 @@ public class MessageResponse extends Response {
 	@Override
 	public void execute(ChatClient client) {
 		// client.printMessage(from, message);
+	}
+	
+	@Override
+	public String toString() {
+		return from + ": " + message;
 	}
 
 }

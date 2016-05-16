@@ -14,15 +14,22 @@ public class ChatTCPHandler extends Thread {
 	
 	private Room room;
 	private String nickname;
+	private ObjectOutputStream out;
 	
 	public ChatTCPHandler(Socket s, ChatTCP server) {
 		this.s = s;
 		this.server = server;
 	}
+	
+	public void respond(Response res) throws IOException {
+		if (out == null) return;
+		out.writeObject(res);
+		out.flush();
+	}
 
 	public void run() {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+			out = new ObjectOutputStream(s.getOutputStream());
 			out.flush();
 			ObjectInputStream in = new ObjectInputStream(s.getInputStream());
 			while (!s.isClosed()) {

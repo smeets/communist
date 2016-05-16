@@ -55,7 +55,7 @@ public class Room {
 			client.setRoom(null);
 			client.setNickName(null);
 			if (isEmpty()) {
-				server.removeRoom(this);
+				server.removeRoomIfEmpty(this);
 			}
 		}
 	}

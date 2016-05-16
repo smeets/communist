@@ -5,6 +5,10 @@ import client.ChatClient;
 // Server --> JoinPacket --> Client
 
 public class JoinResponse extends Response {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7671488413310383217L;
 	private boolean success;
 	private String message;
 	
