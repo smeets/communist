@@ -19,8 +19,7 @@ public class RoomsResponse extends Response {
 
 	@Override
 	public void execute(ChatClient client) {
-		// TODO Auto-generated method stub
-		
+		client.getGUI().setRoomList(rooms);
 	}
 	
 	public String toString(){

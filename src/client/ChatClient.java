@@ -1,27 +1,21 @@
 package client;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.util.Scanner;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
-import protocol.JoinRequest;
-import protocol.LeaveRequest;
-import protocol.MembersRequest;
-import protocol.MessageRequest;
-import protocol.Request;
-import protocol.RoomsRequest;
-import testing.MessagePrinter;
 
-public class ChatClient extends Thread {
+import protocol.Request;
+
+public class ChatClient {
 	public String name;
+	private String room;
 	private Socket s;
-	
-	public ChatClient(String host, int port, String name) {
+	private GUI gui;
+	private ObjectOutputStream out;
+
+	public ChatClient(String host, int port, String name, GUI gui) {
+		this.gui = gui;
+		this.name = name;
 		try {
 			s = new Socket(host, port);
 		} catch (IOException e) {
@@ -29,33 +23,39 @@ public class ChatClient extends Thread {
 		}
 	}
 
-	public void run() {
-		new MessagePrinter(s).start();
-		Scanner kb = new Scanner(System.in);
-		try {
-			ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-			out.flush();
-			while (!s.isClosed()) {
-				String msg = kb.nextLine();
-				Request r = null;
-				if (msg.startsWith("/join")) {
-					r = new JoinRequest(name, "tempRoom");
-				} else if (msg.startsWith("/rooms")) {
-					r = new RoomsRequest();
-				} else if (msg.startsWith("/members")) {
-					r = new MembersRequest("tempRoom");
-				} else if (msg.startsWith("/leave")) {
-					r = new LeaveRequest();
-				} else {
-					r = new MessageRequest(msg);
-				}
-				if (r != null) {
-					out.writeObject(r);
-					out.flush();
-				}
-			}
-		} catch (IOException e) {
+	public void sendRequest(Request req) {
+		if (out == null) {
+			System.out.println("Wtf");
+			return;
 		}
-		kb.close();
+
+		try {
+			out.writeObject(req);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void run() {
+		new ResponseHandler(this, s).start();
+		try {
+			out = new ObjectOutputStream(s.getOutputStream());
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public GUI getGUI() {
+		return gui;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
+	}
+
+	public String getRoom() {
+		return room;
 	}
 }

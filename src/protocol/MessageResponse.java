@@ -17,7 +17,7 @@ public class MessageResponse extends Response {
 
 	@Override
 	public void execute(ChatClient client) {
-		// client.printMessage(from, message);
+		client.getGUI().addMessage(from, message);
 	}
 	
 	@Override

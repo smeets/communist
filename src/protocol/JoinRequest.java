@@ -24,9 +24,10 @@ public class JoinRequest extends Request{
 		
 		// Room exists --> try to join, but nick might be taken
 		if (room.join(this.nick, client)) {
-			return new JoinResponse(true, "success");
+			room.getClients().forEach(c -> c.respond(new UserJoinEvent()));
+			return new JoinResponse(true, "success", this.room);
 		}
 		// Nick was taken
-		return new JoinResponse(false, "nickname taken");
+		return new JoinResponse(false, "nickname taken", this.room);
 	}
 }

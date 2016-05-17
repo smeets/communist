@@ -1,8 +1,5 @@
 package server;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import protocol.MessageResponse;
 
 public class MessageThread extends Thread {
@@ -13,11 +10,7 @@ public class MessageThread extends Thread {
 	}
 
 	public void send(ChatTCPHandler c, MessageResponse p) {
-		try {
-			c.respond(p);
-		} catch (IOException e) {
-			System.out.println(e);
-		}
+		c.respond(p);
 	}
 
 	public void run() {

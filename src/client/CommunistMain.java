@@ -39,6 +39,7 @@ public class CommunistMain {
 
 		JTextField hostText = new JTextField(20);
 		hostText.setBounds(100, 10, 160, 25);
+		hostText.setText("localhost");
 		panel.add(hostText);
 
 	
@@ -46,9 +47,10 @@ public class CommunistMain {
 		portLabel.setBounds(10, 40, 80, 25);
 		panel.add(portLabel);
 
-		JTextField Port = new JTextField(20);
-		Port.setBounds(100, 40, 160, 25);
-		panel.add(Port);
+		JTextField port = new JTextField(20);
+		port.setBounds(100, 40, 160, 25);
+		port.setText("30000");
+		panel.add(port);
 		
 		JLabel userLabel = new JLabel("KGB-Agent");
 		userLabel.setBounds(10, 70, 80, 25);
@@ -56,6 +58,7 @@ public class CommunistMain {
 
 		JTextField userText = new JTextField(20);
 		userText.setBounds(100, 70, 160, 25);
+		userText.setText("stalin");
 		panel.add(userText);
 
 
@@ -72,7 +75,7 @@ public class CommunistMain {
 	      {
 	    		 String[] s = new String[3];
 	     			s[0] = hostText.getText();
-	     			s[1] = Port.getText();
+	     			s[1] = port.getText();
 	     			s[2] = userText.getText();
 //	     			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	     			frame.setVisible(false);

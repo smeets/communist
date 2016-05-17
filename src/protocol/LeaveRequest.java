@@ -17,11 +17,12 @@ public class LeaveRequest extends Request {
 		
 		// Wtf u doin??
 		if (room == null)
-			return null;
+			return new LeaveResponse(false);
 		
 		room.leave(client);
+		room.getClients().forEach(c -> c.respond(new UserLeaveEvent()));
 
-		return null;
+		return new LeaveResponse(true);
 	}
 
 }

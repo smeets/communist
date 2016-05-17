@@ -1,36 +1,53 @@
 package client;
 
+import java.util.List;
+
 import gui.ChatWindow;
 import gui.ListWindow;
 import gui.MenuWindow;
-import protocol.Response;
-import protocol.RoomsRequest;
 import server.ChatTCP;
-import testing.TestingChatClient;
 
 public class GUI {
-	
-	
+
+	private ChatClient client;
+	private ChatView chat;
+	private UserView users;
+	private RoomView rooms;
 	
 	public GUI(String [] s){
+		String host = s[0];
+		String nick = s[2];
+		int port = Integer.parseInt(s[1]);
 		
-		
+		//new ChatTCP(port).start();
+		client = new ChatClient(host, port, nick, this);
+		client.run();
 
+		chat = new ChatView(400, 210, "CommunistChat", client);
+		chat.show();
 		
-		ChatWindow cw = new ChatWindow(400, 210, "CommunistChat");
-		cw.show();
-		ListWindow lw = new ListWindow("Users");
-		lw.show();
-		MenuWindow mw = new MenuWindow("Rooms");
-		RoomsRequest r = new RoomsRequest();
-		mw.add(r.toString());
-		mw.show();
-//		
-		cw.add("Welcome "+ s[2] +"!\n");
+		users = new UserView("Users", client);
+		users.show();
 		
-		new ChatTCP(Integer.parseInt(s[1])).start();
-		System.out.println("Serversocket on port " + Integer.parseInt(s[1]));
-//		new ChatClient(s[0],Integer.parseInt(s[1])).run();
-		new ChatClient(s[0], Integer.parseInt(s[1]), s[2]).start();
+		rooms = new RoomView("Rooms", client);		
+		rooms.show();
+
+		chat.add("Welcome "+ nick +"!\n");
+	}
+	
+	public void setRoomList(List<String> rooms) {
+		this.rooms.setList(rooms);
+	}
+	
+	public void setUserList(List<String> users) {
+		this.users.setList(users);
+	}
+	
+	public void addMessage(String user, String message) {
+		chat.add(user + ": " + message);
+	}
+	
+	public void info(String message) {
+		chat.add(message);
 	}
 }

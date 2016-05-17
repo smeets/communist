@@ -24,10 +24,13 @@ public class ChatTCPHandler extends Thread {
 		this.server = server;
 	}
 	
-	public void respond(Response res) throws IOException {
+	public void respond(Response res)  {
 		if (out == null) return;
-		out.writeObject(res);
-		out.flush();
+		try {
+			out.writeObject(res);
+			out.flush();
+		} catch (IOException e) {
+		}
 	}
 
 	public void run() {
