@@ -7,7 +7,7 @@
  * create `communist` project in eclipse
  * cd to communist folder in terminal
  * run `git init`
- * add remote: `git add remote origin git@github.com:murlocbrand/communist.git`
+ * add remote: `git add remote origin https://github.com/murlocbrand/communist.git` or something
  * pull changes: `git pull`
 
 ### not eclipse
@@ -15,8 +15,8 @@
  * `cd communist/src`
  * compile client: `javac client/CommunistMain.java`
  * compile server: `javac server/ChatTCP.java`
- * run client `java client.CommunistMain`
  * run server `java server.ChatTCP PORT`
+ * run client `java client.CommunistMain`
 
 [Background](https://gfycat.com/SlimMellowLacewing)
 
