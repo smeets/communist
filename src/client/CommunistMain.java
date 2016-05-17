@@ -15,9 +15,6 @@ import javax.swing.JTextField;
 public class CommunistMain {
 	
 	public static void main(String[] args) {
-	
-
-		
 		JFrame frame = new JFrame("CommunistChat");
 		frame.setSize(250, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,7 +35,6 @@ public class CommunistMain {
 		hostText.setText("localhost");
 		panel.add(hostText);
 
-	
 		JLabel portLabel = new JLabel("Port");
 		portLabel.setBounds(10, 40, 80, 25);
 		panel.add(portLabel);
@@ -57,11 +53,9 @@ public class CommunistMain {
 		userText.setText("stalin");
 		panel.add(userText);
 
-
 		JButton loginButton = new JButton("login");
 		loginButton.setBounds(10, 110, 80, 25);
 		panel.add(loginButton);
-		
 		
 		frame.setVisible(true);
 		
@@ -69,15 +63,9 @@ public class CommunistMain {
 	    {
 	      public void actionPerformed(ActionEvent e)
 	      {
-	    		 String[] s = new String[3];
-	     			s[0] = hostText.getText();
-	     			s[1] = port.getText();
-	     			s[2] = userText.getText();
-//	     			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	     			frame.setVisible(false);
 	     			frame.dispose(); 
-	     			GUI gui = new GUI(s);
-	     			
+	     			GUI gui = new GUI(hostText.getText(), Integer.parseInt(port.getText()), userText.getText());
 	      }
 	    });
 	 

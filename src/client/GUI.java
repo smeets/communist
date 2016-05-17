@@ -9,12 +9,7 @@ public class GUI {
 	private UserView users;
 	private RoomView rooms;
 	
-	public GUI(String [] s){
-		String host = s[0];
-		String nick = s[2];
-		int port = Integer.parseInt(s[1]);
-		
-		//new ChatTCP(port).start();
+	public GUI(String host, int port, String nick){
 		client = new ChatClient(host, port, nick, this);
 		client.run();
 
