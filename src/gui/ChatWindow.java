@@ -1,6 +1,13 @@
 package gui;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Button;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Panel;
+import java.awt.SystemColor;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * A ChatWindow is a window which handles the user interaction of one
@@ -158,7 +165,7 @@ public class ChatWindow {
     }
     
     private class SubmitHandler implements ActionListener {
-	boolean confirmed;
+
 	
 	public void actionPerformed(ActionEvent e) {
 	    String m = inputField.getText();

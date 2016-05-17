@@ -2,11 +2,6 @@ package client;
 
 import java.util.List;
 
-import gui.ChatWindow;
-import gui.ListWindow;
-import gui.MenuWindow;
-import server.ChatTCP;
-
 public class GUI {
 
 	private ChatClient client;
