@@ -51,7 +51,13 @@ public class ChatTCP extends Thread {
 	}
 
 	public static void main(String[] args) {
-		new ChatTCP(30000).run();
+		int port = 30000;
+		if (args.length == 1) {
+			port = Integer.parseInt(args[0]);
+		} else {
+			System.out.println("Defaulting to port " + port);
+		}
+		new ChatTCP(port).run();
 	}
 
 }
